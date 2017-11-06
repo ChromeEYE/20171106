@@ -4,26 +4,26 @@ using UnityEngine;
 
 public class enemy : MonoBehaviour
 {
-    bool m_xPlus = true;  // x 軸プラス方向に移動中
+
+    Transform player;
+
+    Vector3 vec;
+    float mag;
+
     // Use this for initialization
     void Start()
     {
+        player = GameObject.Find("Player").transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (m_xPlus)
+        vec = player.position - transform.position;
+        mag = vec.magnitude;
+        if (mag < 25)
         {
-            transform.position += new Vector3(2f * Time.deltaTime, 0f, 0f);
-            if (transform.position.x >= 4)
-                m_xPlus = false;
-        }
-        else
-        {
-            transform.position -= new Vector3(2f * Time.deltaTime, 0f, 0f);
-            if (transform.position.x <= -4)
-                m_xPlus = true;
+            transform.Translate(new Vector3(-vec.x, 0, -vec.z).normalized);
         }
     }
 
